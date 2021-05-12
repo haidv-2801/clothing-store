@@ -1,0 +1,118 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using ClothesStore.WebApp.Common;
+@using System.Text.Json;
+@using ClothesStore.Model.Model.EF;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var user = HttpContextAccessor.HttpContext.Session.GetString(Constant.USER);
+    var emp = new Employee();
+    if (user != null)
+       emp = JsonSerializer.Deserialize<Employee>(user) as Employee;
+}
+<div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
+    <div class="c-sidebar-brand d-lg-down-none">
+        <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+            <use xlink:href="/lib/assets/brand/coreui.svg#full"></use>
+        </svg>
+        <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
+            <use xlink:href="/lib/assets/brand/coreui.svg#signet"></use>
+        </svg>
+    </div>
+    <ul class="c-sidebar-nav">
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-house"></use>
+                </svg> Trang chủ<span class="badge badge-info">NEW</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-title">Tài khoản</li>
+        @if (emp.IsAdmin == true)
+        {
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="/Admin/Admin">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="/lib/icon/sprites/free.svg#cil-user"></use>
+                    </svg> Quản trị nhân viên
+                </a>
+            </li>
+        }
+
+
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/Admin/Customer/Index">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-user"></use>
+                </svg> Khách hàng
+            </a>
+        </li>
+
+
+
+        <li class="c-sidebar-nav-title">Chức năng</li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/Admin/Slider/Index">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-house"></use>
+                </svg> Quản lý Slider
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/Admin/Brand/Index">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-people"></use>
+                </svg> Quản lý thương hiệu
+            </a>
+        </li>
+
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/Admin/Category/Index">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-people"></use>
+                </svg> Quản lý danh mục sản phẩm
+            </a>
+        </li>
+
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/Admin/Color/Index">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-user"></use>
+                </svg> Quản lý màu sắc
+            </a>
+        </li>
+
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/Admin/Size/Index">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-house"></use>
+                </svg> Quản lý kích thước
+            </a>
+        </li>
+
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/Admin/Product/Index">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-satelite"></use>
+                </svg> Quản lý sản phẩm
+            </a>
+        </li>
+
+        <li class="c-sidebar-nav-title">Hóa đơn</li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/Admin/Order">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-view-quilt"></use>
+                </svg> Hóa đơn bán
+            </a>
+        </li>
+
+        @*<li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="/Admin/ItemInRoom">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-laptop"></use>
+                </svg> Hóa đơn nhập
+            </a>
+        </li>*@
+    </ul>
+    <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
+</div>

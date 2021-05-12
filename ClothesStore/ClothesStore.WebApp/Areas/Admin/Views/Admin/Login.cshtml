@@ -1,0 +1,67 @@
+﻿
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LoginLayout.cshtml";
+}
+<form class="login">
+    <div class="card-body">
+        <h1>Login</h1>
+        <p class="text-medium-emphasis">Sign In to your account</p>
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <svg class="c-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-user"></use>
+                </svg>
+            </span>
+            <input class="form-control" type="text" name="Email" placeholder="Email">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text">
+                <svg class="c-icon">
+                    <use xlink:href="/lib/icon/sprites/free.svg#cil-lock-locked"></use>
+                </svg>
+            </span>
+            <input class="form-control" type="password" name="Password" placeholder="Password">
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button class="btn btn-primary-red px-4" onclick="Login()" type="button">Login</button>
+            </div>
+            <div class="col-6 text-end">
+                <button class="btn btn-link-red px-0" type="button" onclick="GetView('/Admin/Admin/ForgotPassword')">Forgot password?</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        function Login() {
+            let data = $('.login').serialize();
+            $.ajax({
+                url: '/Admin/Admin/Login',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                beforeSend: function () {
+                    $('body').append(`<div class="loader"></div>`);
+                    $('body').addClass('overlayout');
+                },
+                success: function (res) {
+                    if (res.status == true) {
+                        if (res.isAdmin == null || res.isAdmin == false)
+                            location.href = '/';
+                        else
+                            location.href = '/Admin/Home/Index';
+                    }
+                    else {
+                        swal("Fail!", "Email or password is incorrect!", "warning");
+                    }
+                },
+                complete: function () {
+                    $('.loader').remove();
+                    $('body').removeClass('overlayout');
+                }
+            })
+        }
+    </script>
+}

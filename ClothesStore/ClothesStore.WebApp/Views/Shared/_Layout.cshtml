@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/client/images/icons/favicon.png" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/fonts/linearicons-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/vendor/slick/slick.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/vendor/MagnificPopup/magnific-popup.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/client/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/client/css/main.css">
+    <style>
+        #overlay {
+            position: fixed;
+            background: rgba(0,0,0,0.8);
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            transform: translate3d(-406px, 5px, 0px);
+            top: 60px;
+            left: 250px;
+            will-change: transform;
+        }
+
+        svg {
+            width: 20px !important;
+            height: 20px !important;
+        }
+    </style>
+    <!--===============================================================================================-->
+</head>
+
+<body class="animsition">
+    <div id="overlay" class="hide"></div>
+
+    <!-- ==================================HOME================================================ -->
+    @await Html.PartialAsync("_HeaderTop")
+    @await Html.PartialAsync("_Cart")
+    @RenderBody()
+    @await Html.PartialAsync("_Footer")
+
+    <script src="~/client/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/client/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/select2/select2.min.js"></script>
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/client/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/slick/slick.min.js"></script>
+    <script src="~/client/js/slick-custom.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/parallax100/parallax100.js"></script>
+    <script>
+        $('.parallax100').parallax100();
+    </script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+    <script>
+        $('.gallery-lb').each(function () { // the containers for all your galleries
+            $(this).magnificPopup({
+                delegate: 'a', // the selector for gallery item
+                type: 'image',
+                gallery: {
+                    enabled: true
+                },
+                mainClass: 'mfp-fade'
+            });
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/isotope/isotope.pkgd.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/sweetalert/sweetalert.min.js"></script>
+    <script>
+        $('.js-addwish-b2').on('click', function (e) {
+            e.preventDefault();
+        });
+
+        $('.js-addwish-b2').each(function () {
+            var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+            $(this).on('click', function () {
+                swal(nameProduct, "is added to wishlist !", "success");
+
+                $(this).addClass('js-addedwish-b2');
+                $(this).off('click');
+            });
+        });
+
+        $('.js-addwish-detail').each(function () {
+            var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+            $(this).on('click', function () {
+                swal(nameProduct, "is added to wishlist !", "success");
+
+                $(this).addClass('js-addedwish-detail');
+                $(this).off('click');
+            });
+        });
+
+        /*---------------------------------------------*/
+
+        $('.js-addcart-detail').each(function () {
+            var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+            $(this).on('click', function () {
+                swal(nameProduct, "is added to cart !", "success");
+            });
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="~/client/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script>
+        $('.js-pscroll').each(function () {
+            $(this).css('position', 'relative');
+            $(this).css('overflow', 'hidden');
+            var ps = new PerfectScrollbar(this, {
+                wheelSpeed: 1,
+                scrollingThreshold: 1000,
+                wheelPropagation: false,
+            });
+
+            $(window).on('resize', function () {
+                ps.update();
+            })
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="~/client/js/main.js"></script>
+    <script src="~/client/js/product.js"></script>
+    <script>
+        //start my code
+        $(document).click(function () {
+            if ($('#notification').hasClass('show')) {
+                $('#notification').removeClass('show')
+            }
+        })
+
+        function ShowUserDropdown() {
+            console.log("test");
+            if ($('#notification').hasClass('show')) {
+                $('#notification').removeClass('show')
+            }
+            $('#notification').dropdown('show');
+        }
+
+        //end up my code
+        let cartStr = localStorage.getItem("Cart");
+        if (cartStr != null) {
+            let cart = JSON.parse(cartStr);
+            $('.icon-header-item').attr('data-notify', cart.length);
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/Home/GetUser',
+                dataType: 'json',
+                type: 'post',
+                data: {
+                },
+                success: function (res) {
+                    let part = ``;
+                    if (res != null) {
+                        part = `
+                                    <div style="font-size:14px" data-toggle="dropdown" class="c-avatar icon-header-item cl2 hov-cl1 trans-04 p-lr-11" aria-haspopup="true" aria-expanded="false">
+                                            <i class="zmdi zmdi-account-circle"></i>
+                                            <span>${res.name}</span>
+                                    </div>
+                                    <div>
+                                        <div class="dropdown-menu dropdown-menu-right pt-0">
+                                            <a class="dropdown-item" href="/User/ChangePassword">
+                                                <svg class="c-icon mr-2 size-icon">
+                                                    <use xlink:href="/lib/icon/sprites/free.svg#cil-lock-locked"></use>
+                                                </svg> Change Password
+                                            </a>
+                                            <a class="dropdown-item" href="/User/Logout">
+                                                <svg class="c-icon mr-2 size-icon">
+                                                    <use xlink:href="/lib/icon/sprites/free.svg#cil-account-logout"></use>
+                                                </svg> Logout
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>`
+                        $('.infor-user').html('');
+                        $('.infor-user').append(part);
+                    }
+
+                }
+            })
+        })
+
+    </script>
+    @RenderSection("script", required: false)
+</body>
+</html>		

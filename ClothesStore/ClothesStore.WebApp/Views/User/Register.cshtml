@@ -1,0 +1,136 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/client/images/bg-01.jpg');">
+    <h2 class="ltext-105 cl0 txt-center">
+        Register
+    </h2>
+</section>
+<section class="bg0 p-t-104 p-b-116">
+    <div class="container">
+        <div class="flex-w flex-tr">
+            <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+                <form class="register">
+                    <h4 class="mtext-105 cl2 txt-center p-b-30">
+                        Register
+                    </h4>
+
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="Name"
+                               placeholder="Fullname">
+                        <img class="how-pos4 pointer-none" src="/client/images/icons/icon-email.png" alt="ICON">
+                    </div>
+
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="number" name="Phone"
+                               placeholder="Phone">
+                        <img class="how-pos4 pointer-none" src="/client/images/icons/icon-email.png" alt="ICON">
+                    </div>
+
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="Email"
+                               placeholder="Email">
+                        <img class="how-pos4 pointer-none" src="/client/images/icons/icon-email.png" alt="ICON">
+                    </div>
+
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="password" name="Password"
+                               placeholder="Your Password">
+                        <img class="how-pos4 pointer-none" src="/client/images/icons/icon-email.png" alt="ICON">
+                    </div>
+
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="password" name="ConfirmedPassword"
+                               placeholder="Confirm Password">
+                        <img class="how-pos4 pointer-none" src="/client/images/icons/icon-email.png" alt="ICON">
+                    </div>
+
+                    <button onclick="Register()" type="button" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                        Register
+                    </button>
+                </form>
+            </div>
+
+            <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+                <div class="flex-w w-full p-b-42">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-map-marker"></span>
+                    </span>
+
+                    <div class="size-212 p-t-2">
+                        <span class="mtext-110 cl2">
+                            Do you have an account?
+                        </span>
+
+                        <a href="/User/Login" class="stext-115 cl6 size-213 p-t-18">
+                            Login Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section script {
+    <script>
+        function Register() {
+            let data = $('.register').serializeArray();
+            var registerObj = {};
+
+            jQuery.map(data, function (value, index) {
+                registerObj[value.name] = [value.value];
+            });
+
+
+            //chua validate
+
+            if (JSON.stringify(registerObj.Password) !== JSON.stringify(registerObj.ConfirmedPassword)) {
+                swal("Fail", "Password must be the same!", "warning");
+            } else {
+                swal({
+                    title: "Are you sure with above infomation?",
+                    text: "",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: false,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                url: '/User/Register',
+                                type: 'post',
+                                dataType: 'json',
+                                data: registerObj,
+                                beforeSend: function () {
+                                    swal("Oops!", "Are you sure with your infomation?", "question", {
+                                        button: "Yes",
+                                    });
+                                },
+                                success: function (res) {
+                                    if (res) {
+                                        swal(`Hello ${registerObj.Name}! Your account is registered!`, {
+                                            icon: "success",
+                                        }).then((value) => {
+                                            location.href = '/User/Login';
+                                        });
+                                    } else {
+                                        swal("OOps", "Something went wrong", "error");
+                                    }
+                                }
+                            })
+
+                        } else {
+                            swal("Failed!");
+                        }
+                    });
+            }
+        }
+
+    </script>
+
+}
+
